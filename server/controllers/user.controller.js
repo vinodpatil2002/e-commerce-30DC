@@ -83,8 +83,16 @@ export const login = async (req, res) => {
         if (!isMatch) {
             return res.status(400).json({ msg: "Invalid Password" });
         }
-        res.json({ msg: "Login Success!" });
-        
+        const accessToken = createAccessToken({ id: user._id });
+        const refreshToken = createRefreshToken({ id: user._id });
+
+        res.cookie('refreshtoken', refreshToken, {
+            httpOnly: true,
+            path: '/user/refresh_token'
+        });
+
+        res.json({accessToken});
+
     } catch (error) {
         return res.status(500).json({ msg: error.message });
     }
