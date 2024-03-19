@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import userRouter from './routes/user.route.js';
+import categoryRouter from './routes/category.route.js';
 import cookieParser from 'cookie-parser';
 
 const app = express();
@@ -31,3 +32,4 @@ mongoose.connect(URI).then(() => {
 
 // routes
 app.use("/user", userRouter);
+app.use("/api",categoryRouter)
