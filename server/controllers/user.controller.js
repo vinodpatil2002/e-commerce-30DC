@@ -106,3 +106,17 @@ export const logout = async (req, res) => {
         return res.status(500).json({ msg: err.message });
     }
 };
+
+export const getUserInfo = async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).select("-password");
+        if (!user) {
+            return res.status(400).json({ msg: "User does not exist" });
+        }
+
+        res.json(user);
+
+    } catch (error) {
+        return res.status(500).json({ msg: error.message });
+    }
+}
