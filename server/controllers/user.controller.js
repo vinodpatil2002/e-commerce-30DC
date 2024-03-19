@@ -63,10 +63,29 @@ export const refreshToken = async (req, res) => {
                 return res.status(400).json({ msg: "Please Login or Register" });
             }
             const accessToken = createAccessToken({ id: user.id });
-            res.json({ accessToken });
+            res.json({ user,accessToken });
         });
 
     } catch (err) {
         return res.status(500).json({ msg: err.message });
+    }
+};
+
+
+export const login = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ msg: "User does not exist" });
+        }
+        const isMatch = await bcryptjs.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(400).json({ msg: "Invalid Password" });
+        }
+        res.json({ msg: "Login Success!" });
+        
+    } catch (error) {
+        return res.status(500).json({ msg: error.message });
     }
 };
