@@ -5,7 +5,8 @@ dotenv.config();
 export const isAuthenticated = async (req, res,next) => {
     try {
         const token = req.header("Authorization");
-        if (!token) return res.status(400).json({ msg: "Invalid Authentication" });
+        // res.json(token);
+        if (!token) return res.status(400).json({ msg: "Invalid Authentications" });
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
             if (err) return res.status(400).json({ msg: "Invalid Authentication" });
             req.user = user;

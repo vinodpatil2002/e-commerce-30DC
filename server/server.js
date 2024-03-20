@@ -3,8 +3,10 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import userRouter from './routes/user.route.js';
 import categoryRouter from './routes/category.route.js';
+import productRouter from './routes/product.route.js';
 import cookieParser from 'cookie-parser';
-
+import uploadRouter from './routes/upload.js';
+import fileUpload from 'express-fileupload';
 const app = express();
 dotenv.config();
 app.use(cookieParser());
@@ -13,7 +15,9 @@ app.use(express.json());
 app.get('/', (req, res) => {
     res.send('Server is ready');
 });
-
+app.use(fileUpload({
+    useTempFiles:true
+}))
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
@@ -32,4 +36,6 @@ mongoose.connect(URI).then(() => {
 
 // routes
 app.use("/user", userRouter);
-app.use("/api",categoryRouter)
+app.use("/api",categoryRouter);
+app.use("/api",uploadRouter)
+app.use("/api", productRouter);
