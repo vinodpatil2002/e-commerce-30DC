@@ -44,7 +44,7 @@ export const getProducts = async (req, res) => {
         const features = new APIfeatures(Product.find(), req.query);
         features.filtering().sorting().paginating(); // Call filtering method
         const products = await features.query;
-        res.json({results:products.length});
+        res.json({products});
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Internal server error" });

@@ -7,7 +7,12 @@ import productRouter from './routes/product.route.js';
 import cookieParser from 'cookie-parser';
 import uploadRouter from './routes/upload.js';
 import fileUpload from 'express-fileupload';
+import cors from 'cors';
+
 const app = express();
+app.use(cors({
+    origin: ["http://localhost:5173"],
+}));
 dotenv.config();
 app.use(cookieParser());
 const PORT = process.env.PORT || 5000;
