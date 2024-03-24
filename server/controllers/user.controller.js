@@ -63,7 +63,7 @@ export const refreshToken = async (req, res) => {
                 return res.status(400).json({ msg: "Please Login or Register" });
             }
             const accessToken = createAccessToken({ id: user.id });
-            res.json({ user,accessToken });
+            res.json(accessToken);
         });
 
     } catch (err) {
